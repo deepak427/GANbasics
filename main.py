@@ -83,5 +83,51 @@ def build_generator():
     
     return model
 
-test_model = build_generator()
-test_model.summary()
+generator = build_generator()
+generator.summary()
+
+img = generator.predict(np.random.randn(4,128,1))
+
+# Generate new fashion
+img = generator.predict(np.random.randn(4,128,1))
+# Setup the subplot formatting 
+fig, ax = plt.subplots(ncols=4, figsize=(20,20))
+# Loop four times and get images 
+for idx, img in enumerate(img): 
+    # Plot the image using a specific subplot 
+    ax[idx].imshow(np.squeeze(img))
+    # Appending the image label as the plot title 
+    ax[idx].title.set_text(idx)
+
+# Build Discriminator
+
+def build_discriminator():
+    model = Sequential()
+
+    # First Conv Block
+    model.add(Conv2D(32, 5, input_shape = (28,28,1)))
+    model.add(LeakyReLU(0.2))
+    model.add(Dropout(0.4))
+    
+    # Second Conv Block
+    model.add(Conv2D(64, 5))
+    model.add(LeakyReLU(0.2))
+    model.add(Dropout(0.4))
+    
+    # Third Conv Block
+    model.add(Conv2D(128, 5))
+    model.add(LeakyReLU(0.2))
+    model.add(Dropout(0.4))
+    
+    # Fourth Conv Block
+    model.add(Conv2D(256, 5))
+    model.add(LeakyReLU(0.2))
+    model.add(Dropout(0.4))
+    
+    # Flatten then pass to dense layer
+    model.add(Flatten())
+    model.add(Dropout(0.4))
+    model.add(Dense(1, activation='sigmoid'))
+    
+    return model 
+
