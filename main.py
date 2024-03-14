@@ -129,5 +129,20 @@ def build_discriminator():
     model.add(Dropout(0.4))
     model.add(Dense(1, activation='sigmoid'))
     
-    return model 
+    return model
+
+discriminator = build_discriminator()
+discriminator.summary()
+
+discriminator.predict(img)
+
+# Construct Training loop
+
+# Setup losses and optimizers
+
+from tensorflow.keras.optimizers import Adam
+
+from tensorflow.keras.losses import BinaryCrossentropy
+
+
 
